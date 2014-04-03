@@ -1,0 +1,18 @@
+<% content_for(:title, "#{@tag.name} | RecipeMaster8000") %>
+
+<h1>Recipes Tagged <%= @tag.name.capitalize %>:</h1>
+
+<ul>
+<% @tag.recipes.each do |recipe| %>
+  <li>
+    <a href="/recipes/<%= recipe.slug %>"><%= recipe.name %> </a>
+  </li>
+<%end%>
+</ul>
+
+<p><a href="/tags/<%= @tag.slug %>/edit">Edit</a></p>
+<p><a href="/tags/<%= @tag.slug %>"
+      data-confirm="Really?!"
+      data-method="delete"
+      rel="nofollow">Delete</a></p>
+<p><a href="/">Return to homepage</a></p>

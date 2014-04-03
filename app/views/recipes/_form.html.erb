@@ -1,16 +1,18 @@
 <label for="recipe_name">Name</label>
 <input id="recipe_name" name="recipe[name]" type="text" value="<%= @recipe.name %>">
-<label for="recipe_rating">Rating</label>
-<input id="recipe_rating" name="recipe[rating]" type="number" min="0" max="5" value="<%= @recipe.rating %>">
 </br>
 <label for="recipe_content">Content</label>
 </br>
 <textarea rows="8" cols="50" id="recipe_content" name="recipe[content]" type="text"><%= @recipe.content %></textarea>
 </br>
-<label for="recipe_tag">Add tags</label>
-<select id="recipe_tag" name="tag[name]">
-  <% @tags.each do |tag| %>
-    <option value="<% tag.name %>"><%= tag.name %></option>
-  <% end %>
-</select>
 <a href="tags/new">Create a new tag</a>
+</br>
+</br>
+<label for="recipe_tag">Add tags: </label>
+</br>
+  <% @tags.each_with_index do |tag, index| %>
+    <input name="tag[<%= index %>]" type="checkbox" value="<%= tag.name %>"><%= tag.name %><br>
+  <% end %>
+</br>
+
+

@@ -3,7 +3,17 @@
 <h1><%= @recipe.name %></h1>
 <h3>Rating: <%= @recipe.rating %></h3>  <!-- ADD CUPCAKE RATINGS!!!!!!!!!!! -->
 
-<p><%= @recipe.content %></p>
+<p><%= simple_format(@recipe.content) %></p>
+
+<p>Tags:
+<% @recipe.tags.each do |tag| %>
+  <a href="/tags/<%= tag.slug %>"><%= tag.name %></a>
+<%end%>
+</p>
+
+<p>Rate this recipe!</p>
+<!-- <label for="recipe_rating">Rating</label>
+<input id="recipe_rating" name="recipe[rating]" type="number" min="0" max="5" value="<%= @recipe.rating %>"> -->
 
 <p><a href="/recipes/<%= @recipe.slug %>/edit">Edit</a></p>
 <p><a href="/recipes/<%= @recipe.slug %>"

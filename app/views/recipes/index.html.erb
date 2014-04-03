@@ -4,7 +4,8 @@
 
 <ul>
   <% @recipes.each do |recipe| %>
-    <li><a href="/recipes/<%= recipe.slug %>"><%= "#{recipe.name}: #{recipe.rating}" %></a></li>
+    <li><a href="/recipes/<%= recipe.slug %>"><%= recipe.name %></a>
+      <br /><%= "Rating: (GOES HERE)" %></li>
   <% end %>
 </ul>
 

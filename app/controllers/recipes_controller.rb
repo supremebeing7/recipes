@@ -9,8 +9,9 @@ class RecipesController < ApplicationController
   def create
     @recipe = Recipe.new(params[:recipe])
     @tags = Tag.all
-    @tag = Tag.find_by(name: params[:tag][:name])
-    @recipe.tags << @tag
+    @all_tags = []
+    params[:tag].each { |key, value| @all_tags << Tag.find_by(name: value) }
+    @all_tags.each { |tag| @recipe.tags << tag }
     if @recipe.save
       params[:recipe][:slug] = ("#{@recipe.id}-#{@recipe.name}").parameterize
       @recipe.update(params[:recipe])
@@ -28,6 +29,7 @@ class RecipesController < ApplicationController
   end
 
   def edit
+    @tags = Tag.all
     @recipe = Recipe.find_by(slug: params[:recipe_slug])
     render('recipes/edit.html.erb')
   end
