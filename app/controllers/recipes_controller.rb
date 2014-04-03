@@ -1,0 +1,52 @@
+class RecipesController < ApplicationController
+  def index
+    @recipes = Recipe.all
+    @recipe = Recipe.new
+    @tags = Tag.all
+    render('recipes/index.html.erb')
+  end
+
+  def create
+    @recipe = Recipe.new(params[:recipe])
+    @tags = Tag.all
+    @tag = Tag.find_by(name: params[:tag][:name])
+    @recipe.tags << @tag
+    if @recipe.save
+      params[:recipe][:slug] = ("#{@recipe.id}-#{@recipe.name}").parameterize
+      @recipe.update(params[:recipe])
+      flash[:notice] = "Your recipe was added to the RecipeMaster8000."
+      redirect_to("/recipes/#{@recipe.slug}")
+    else
+      flash[:alert] = "Try again, doofus"
+      redirect_to("/recipes")
+    end
+  end
+
+  def show
+    @recipe = Recipe.find_by(slug: params[:recipe_slug])
+    render('recipes/show.html.erb')
+  end
+
+  def edit
+    @recipe = Recipe.find_by(slug: params[:recipe_slug])
+    render('recipes/edit.html.erb')
+  end
+
+  def update
+    @recipe = Recipe.find_by(slug: params[:recipe_slug])
+    if @recipe.update(params[:recipe])
+      flash[:notice] = "Your recipe was updated on the RecipeMaster8000."
+      redirect_to("/recipes/#{@recipe.slug}")
+    else
+      flash[:alert] = "Try again, nerd"
+      render('recipes/edit.html.erb')
+    end
+  end
+
+  def destroy
+    @recipe = Recipe.find_by(slug: params[:recipe_slug])
+    @recipe.destroy
+    flash[:notice] = "Your recipe was deleted from the RecipeMaster8000."
+    redirect_to("/recipes")
+  end
+end

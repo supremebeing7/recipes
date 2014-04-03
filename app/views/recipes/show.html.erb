@@ -1,0 +1,13 @@
+<% content_for(:title, "#{@recipe.name} | RecipeMaster8000") %>
+
+<h1><%= @recipe.name %></h1>
+<h3>Rating: <%= @recipe.rating %></h3>  <!-- ADD CUPCAKE RATINGS!!!!!!!!!!! -->
+
+<p><%= @recipe.content %></p>
+
+<p><a href="/recipes/<%= @recipe.slug %>/edit">Edit</a></p>
+<p><a href="/recipes/<%= @recipe.slug %>"
+      data-confirm="Really?!"
+      data-method="delete"
+      rel="nofollow">Delete</a></p>
+<p><a href="/recipes">Return to homepage</a></p>

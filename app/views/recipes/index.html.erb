@@ -1,0 +1,19 @@
+<% content_for(:title, "All Recipes | RecipeMaster8000") %>
+
+<h1>Recipes</h1>
+
+<ul>
+  <% @recipes.each do |recipe| %>
+    <li><a href="/recipes/<%= recipe.slug %>"><%= "#{recipe.name}: #{recipe.rating}" %></a></li>
+  <% end %>
+</ul>
+
+
+<h2>Add a Recipe</h2>
+<%= render('layouts/errors', object: @recipe) %>
+
+<form action="/recipes/<%= @recipe.slug %>" method="post">
+  <%= render('form') %>
+  </br>
+  <button>Create Recipe</button>
+</form>
