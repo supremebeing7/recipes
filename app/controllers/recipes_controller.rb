@@ -35,7 +35,9 @@ class RecipesController < ApplicationController
   end
 
   def update
+    @rating = Rating.create(params[:rating])
     @recipe = Recipe.find_by(slug: params[:recipe_slug])
+    @recipe.ratings << @rating
     if @recipe.update(params[:recipe])
       flash[:notice] = "Your recipe was updated on the RecipeMaster8000."
       redirect_to("/recipes/#{@recipe.slug}")

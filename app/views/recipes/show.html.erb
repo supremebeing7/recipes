@@ -1,9 +1,10 @@
 <% content_for(:title, "#{@recipe.name} | RecipeMaster8000") %>
 
 <h1><%= @recipe.name %></h1>
-<h3>Rating: <%= @recipe.rating %></h3>  <!-- ADD CUPCAKE RATINGS!!!!!!!!!!! -->
+<h3>Rating: <span class="stars"><%= @recipe.ratings.collect(&:rating).sum.to_f/@recipe.ratings.length if @recipe.ratings.length > 0 %></span></h3>
 
-<p><%= simple_format(@recipe.content) %></p>
+<p><%= simple_format(@recipe.ingredients) %></p>
+<p><%= simple_format(@recipe.directions) %></p>
 
 <p>Tags:
 <% @recipe.tags.each do |tag| %>
@@ -11,9 +12,20 @@
 <%end%>
 </p>
 
-<p>Rate this recipe!</p>
-<!-- <label for="recipe_rating">Rating</label>
-<input id="recipe_rating" name="recipe[rating]" type="number" min="0" max="5" value="<%= @recipe.rating %>"> -->
+<p>Ratings:<br />
+<% if @recipe.ratings.count != 0 %>
+  <% @recipe.ratings.each do |rating| %>
+    <%= rating.created_at.strftime("%m/%d/%Y") %> - Rated: <%= rating.rating %><br />
+  <%end%>
+<%end%>
+</p>
+
+<p>
+<form action="/recipes/<%= @recipe.slug %>" method="post">
+  <button>Rate this recipe:</button>
+  <input name="_method" type="hidden" value="patch">
+  <input name="rating[rating]" type="number" min="0" max="5"></p>
+</form>
 
 <p><a href="/recipes/<%= @recipe.slug %>/edit">Edit</a></p>
 <p><a href="/recipes/<%= @recipe.slug %>"

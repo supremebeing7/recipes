@@ -15,6 +15,8 @@ Recipes::Application.routes.draw do
   match('recipes/:recipe_slug', {:via => [:patch, :put], :to => 'recipes#update'})
   match('recipes/:recipe_slug', {:via => :delete, :to => 'recipes#destroy'})
 
+  match('ratings/:rating', {:via => :get, :to => 'ratings#show'})
+
 end
 
 
